@@ -45,7 +45,7 @@ const VocabModal = (modal)=>{
             note:notes
         }
         console.log('add new vocab=' +JSON.stringify(body))
-        axios.post('http://localhost:8081/add-vocab-single',body).then(()=>{
+        axios.post('http://localhost:8081/vocab/add-single',body).then(()=>{
             modal.handleClose()
         })
         
@@ -66,7 +66,7 @@ const VocabModal = (modal)=>{
             note:notes
         }
         console.log('update new vocab=' + JSON.stringify(body))
-        axios.post('http://localhost:8081/update-vocab-single',body,{headers:headers}).then(()=>{
+        axios.post('http://localhost:8081/vocab/update-single',body,{headers:headers}).then(()=>{
             modal.handleClose()
         })
     }
@@ -81,7 +81,7 @@ const VocabModal = (modal)=>{
         }
         console.log('delete vocab=' + JSON.stringify(body))
         
-        axios.post('http://localhost:8081/delete-vocab-single',body,{headers:headers}).then(()=>{
+        axios.post('http://localhost:8081/vocab/delete-single',body,{headers:headers}).then(()=>{
             modal.handleClose()
         })
     }

@@ -49,7 +49,7 @@ const Vocab= () =>{
  }
 
  useEffect(()=>{
-   axios.get("http://localhost:8081/get-vocab").then((resp)=>{
+   axios.get("http://localhost:8081/vocab/list").then((resp)=>{
     console.log(resp.data);
      if(resp.data){
         var vocabs = [];
