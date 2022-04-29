@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const VocabCard = (vocab)=>{
-
     return(
         <div className="vocab-card" onClick={()=>vocab.handleShow(vocab)}>
             <p>{vocab.vocab}<span className="badge bg-secondary">{vocab.wordtype}</span></p>
