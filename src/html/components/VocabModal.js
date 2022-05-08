@@ -21,7 +21,7 @@ const VocabModal = (modal) => {
       setMeaning(modal.vocab.meaning);
       setComment(modal.vocab.sentence);
       setTranslation(modal.vocab.translation);
-      setNotes(modal.vocab.notes);
+      setNotes(modal.vocab.note);
     } else {
       setName("");
       setType("N");

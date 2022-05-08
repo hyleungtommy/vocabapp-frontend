@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -11,28 +11,30 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/style.css";
 import "../css/login.css";
-import { Dropdown } from "bootstrap";
 import memberLogo from "../img/member4.jpg";
-import flag1 from "../img/flag-jp.png";
-import flag2 from "../img/flag-kr.jpg";
-import flag3 from "../img/flag-ru.png";
 import VocabCard from "./components/VocabCard";
 import VocabModal from "./components/VocabModal";
 import axios from "axios";
 import LangDropdown from "./components/LangDropdown";
 import LangModal from "./components/LangModal";
+import { Link } from "react-router-dom";
 
-const Vocab = () => {
+const Vocab = (item) => {
+  
   const [vocabs, setVocabs] = useState([]);
   const [show, setShow] = useState(false);
   const [langModalShow, setLangModalShow] = useState(false);
   const [modalMode, setModalMode] = useState("New");
   const [selectedVocab, setSelectedVocab] = useState({});
-  const [userId, setUserId] = useState("620d9b717b9958aab63462e3");
+  const [userId, setUserId] = useState(item.getId());
+  //const userId = item.userId;
+  //console.log(item.userId)
   const [selectedLang, setSelectedLang] = useState(0);
   const [selectedLangCode, setSelectedLangCode] = useState("jp");
+  const [selectedLangType, setSelectedLangType] = useState("");
   const [langList, setLangList] = useState([]);
   const [updateView, setUpdateView] = useState(0);
+  const [updateLangView, setUpdateLangView] = useState(0);
 
   const handleClose = () => {
     setShow(false);
@@ -55,7 +57,11 @@ const Vocab = () => {
   };
 
   const getVocabList = async function () {
-    getVocabListCache(langList);
+    console.log("langtype=" + selectedLangType)
+    if(selectedLangType == '')
+      getVocabListCache(langList);
+    else
+      getLangListByType(selectedLangType)
   };
 
   const getVocabListCache = async function (langListCache) {
@@ -115,11 +121,46 @@ const Vocab = () => {
             langList.push(lang);
           });
           setLangList(langList);
-          console.log(langList);
           getVocabListCache(langList); // pass in langList when loading the first time
         }
       });
   };
+
+  const getLangListByType = async function (langType){
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    };
+    const body = {
+      userId: userId,
+      langCode: selectedLangCode,
+      type:langType
+    };
+    axios
+      .post("http://localhost:8081/vocab/filter/type", body, {
+        headers: headers,
+      })
+      .then((resp) => {
+        console.log(resp.data);
+        if (resp.data) {
+          var vocabs = [];
+          resp.data.map((vocab) => {
+            vocabs.push({
+              _id: vocab._id,
+              vocab: vocab.vocab,
+              wordtype: vocab.type,
+              meaning: vocab.meaning,
+              sentence: vocab.sentence,
+              translation: vocab.translation,
+              note: vocab.note,
+            });
+          });
+          //console.log(vocabs);
+          setVocabs(vocabs);
+          setSelectedLangType(langType)
+        }
+      });
+  }
 
   const openLangModal = ()=>{
     setLangModalShow(true);
@@ -135,7 +176,7 @@ const Vocab = () => {
 
   useEffect(() => {
     getLangList();
-  }, [updateView]);
+  }, [updateLangView]);
 
   //store all display vocab cards
   //todo: update number of card when user scroll down
@@ -149,6 +190,7 @@ const Vocab = () => {
         meaning={vocab.meaning}
         sentence={vocab.sentence}
         translation={vocab.translation}
+        note={vocab.note}
         handleShow={openModalAsExistingVocab}
       />
     );
@@ -159,14 +201,27 @@ const Vocab = () => {
       <Container fluid>
         <Container id="navbar">
           <img src={memberLogo} className="account-icon" alt="acc" />
-          <Button className="btn btn-outline-success">Logout</Button>
+          <Link to='/login' ><Button variant="outline-success" className="btn-logout" onClick={item.logout}>Logout</Button></Link>
+          {
+            (langList.length == 0 ? 
+            <button
+            type="button"
+            className="btn btn-primary blue float-right btn-add-lang"
+            data-bs-toggle="modal"
+            data-bs-target="#myModal"
+            onClick={openLangModal}
+          >Add Language</button> :
           <LangDropdown
-            userId={userId}
-            langList={langList}
-            selectedLang={selectedLang}
-            handleClick={selectLanguage}
-            openLangModal={openLangModal}
-          />
+          userId={userId}
+          langList={langList}
+          selectedLang={selectedLang}
+          handleClick={selectLanguage}
+          openLangModal={openLangModal}
+        />
+          )
+          }
+          
+          
         </Container>
         <hr />
         <Container id="vocab-main">
@@ -188,24 +243,34 @@ const Vocab = () => {
               Filter
             </button>
             <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">
+              <li onClick={(e)=>{getLangListByType("V");e.preventDefault()}}>
+                <a className="dropdown-item" href="#" onClick={(e)=>e.preventDefault()}>
                   Verb
                 </a>
               </li>
-              <li>
-                <a className="dropdown-item" href="#">
+              <li onClick={()=>getLangListByType("ADJ")}>
+                <a className="dropdown-item" href="#" >
                   Adjective
                 </a>
               </li>
-              <li>
+              <li onClick={()=>getLangListByType("N")}>
                 <a className="dropdown-item" href="#">
                   Noun
                 </a>
               </li>
-              <li>
-                <a className="dropdown-item" href="#">
+              <li onClick={()=>getLangListByType("ADV")}>
+                <a className="dropdown-item" href="#" >
                   Adverb
+                </a>
+              </li>
+              <li onClick={()=>getLangListByType("P")}>
+                <a className="dropdown-item" href="#" >
+                  Pharse
+                </a>
+              </li>
+              <li onClick={()=>getLangListByType("")}>
+                <a className="dropdown-item" href="#" >
+                  All
                 </a>
               </li>
             </ul>
@@ -227,8 +292,8 @@ const Vocab = () => {
             langModalShow={langModalShow}
             closeLangModal={closeLangModal}
             userId={userId}
-            updateView={updateView}
-            setUpdateView={setUpdateView}
+            updateView={updateLangView}
+            setUpdateView={setUpdateLangView}
           />
         </Container>
       </Container>

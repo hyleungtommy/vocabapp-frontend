@@ -85,3 +85,11 @@ footer{
     float: left;
     display: inline;
 }
+
+.btn-add-lang{
+    margin-top: 15px;
+}
+
+.btn-logout{
+    margin-left: 15px;
+}
