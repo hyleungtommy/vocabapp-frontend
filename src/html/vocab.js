@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext,useRef, useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 
 const Vocab = (item) => {
   
+  const quizButton = useRef(null)
   const [vocabs, setVocabs] = useState([]);
   const [show, setShow] = useState(false);
   const [langModalShow, setLangModalShow] = useState(false);
@@ -53,6 +54,7 @@ const Vocab = (item) => {
     console.log("selected pos=" + pos);
     setSelectedLang(pos);
     setSelectedLangCode(langList[pos].code);
+    storeUserInfo(userId,langList[pos].code)
     setUpdateView(updateView + 1);
   };
 
@@ -97,6 +99,11 @@ const Vocab = (item) => {
           });
           //console.log(vocabs);
           setVocabs(vocabs);
+          if(vocabs.length > 20){
+            quizButton.current.style="display:inline-block"
+          }else{
+            quizButton.current.style="display:none"
+          }
         }
       });
   };
@@ -125,6 +132,11 @@ const Vocab = (item) => {
         }
       });
   };
+
+  const storeUserInfo = (userId,selectedLang)=>{
+    localStorage.setItem("userId",userId)
+    localStorage.setItem("selectedLang",selectedLang)
+  }
 
   const getLangListByType = async function (langType){
     const headers = {
@@ -158,6 +170,7 @@ const Vocab = (item) => {
           //console.log(vocabs);
           setVocabs(vocabs);
           setSelectedLangType(langType)
+          
         }
       });
   }
@@ -202,6 +215,7 @@ const Vocab = (item) => {
         <Container id="navbar">
           <img src={memberLogo} className="account-icon" alt="acc" />
           <Link to='/login' ><Button variant="outline-success" className="btn-logout" onClick={item.logout}>Logout</Button></Link>
+          <Link to='/quiz' ><Button ref={quizButton} variant="info" >Quiz</Button></Link>
           {
             (langList.length == 0 ? 
             <button

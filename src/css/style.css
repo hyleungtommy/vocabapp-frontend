@@ -92,4 +92,64 @@ footer{
 
 .btn-logout{
     margin-left: 15px;
+    margin-right: 15px;
+}
+
+.center{
+    text-align: center;
+}
+
+.quizbox{
+    display: block;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.quizbox:hover{
+    cursor: pointer;
+    background-color:lightgray;
+}
+
+.text-correct{
+    text-align: center;
+    font-size: 2em;
+    color: green;
+}
+
+.text-incorrect{
+    text-align: center;
+    font-size: 2em;
+    color: red;
+}
+
+.text-total-score{
+    text-align: center;
+    font-size: 1.5em;
+    color: green;
+}
+
+#quiz-panel{
+    background: white;
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: 0.25rem;
+    box-shadow: 0px 10px 34px -15px rgb(0 0 0 / 24%);
+}
+
+.hide{
+    display: none;
+}
+
+.btn-next-quiz{
+    width: 50%;
+    font-size: 1.25em;
+}
+
+.btn-float-right{
+    float: right;
+    margin-top: 15px;
+    margin-left: 10px;
 }
