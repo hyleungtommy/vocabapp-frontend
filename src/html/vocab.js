@@ -76,7 +76,7 @@ const Vocab = (item) => {
     };
     const body = {
       userId: userId,
-      langCode: selectedLangCode,
+      langCode: langListCache[0].code,
     };
     axios
       .post("http://localhost:8081/vocab/list-langcode", body, {
@@ -109,6 +109,7 @@ const Vocab = (item) => {
   };
 
   const getLangList = async function () {
+    quizButton.current.style="display:none"// do not show quest button when langList is empty
     const headers = {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -128,7 +129,11 @@ const Vocab = (item) => {
             langList.push(lang);
           });
           setLangList(langList);
-          getVocabListCache(langList); // pass in langList when loading the first time
+          if(langList.length > 0){
+            setSelectedLangCode(langList[0].code)
+            getVocabListCache(langList); // pass in langList when loading the first time
+          }
+          
         }
       });
   };
