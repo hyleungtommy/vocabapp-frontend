@@ -18,6 +18,7 @@ import axios from "axios";
 import LangDropdown from "./components/LangDropdown";
 import LangModal from "./components/LangModal";
 import { Link } from "react-router-dom";
+import url from '../awsurl'
 
 const Vocab = (item) => {
   
@@ -79,7 +80,7 @@ const Vocab = (item) => {
       langCode: langListCache[0].code,
     };
     axios
-      .post("http://localhost:8081/vocab/list-langcode", body, {
+      .post(url + "/vocab/list-langcode", body, {
         headers: headers,
       })
       .then((resp) => {
@@ -118,7 +119,7 @@ const Vocab = (item) => {
       _id: userId,
     };
     axios
-      .post("http://localhost:8081/user/get-langlist", body, {
+      .post( url + "/user/get-langlist", body, {
         headers: headers,
       })
       .then((resp) => {
@@ -131,6 +132,7 @@ const Vocab = (item) => {
           setLangList(langList);
           if(langList.length > 0){
             setSelectedLangCode(langList[0].code)
+            storeUserInfo(userId,langList[0].code)
             getVocabListCache(langList); // pass in langList when loading the first time
           }
           
@@ -154,7 +156,7 @@ const Vocab = (item) => {
       type:langType
     };
     axios
-      .post("http://localhost:8081/vocab/filter/type", body, {
+      .post(url + "/vocab/filter/type", body, {
         headers: headers,
       })
       .then((resp) => {

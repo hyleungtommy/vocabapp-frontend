@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import "../../css/style.css";
 import React, { useState } from "react";
 import axios from "axios";
+import url from '../../awsurl'
 
 const VocabModal = (modal) => {
   const [id, setId] = useState("");
@@ -47,7 +48,7 @@ const VocabModal = (modal) => {
       userId: userId,
     };
     console.log("add new vocab=" + JSON.stringify(body));
-    axios.post("http://localhost:8081/vocab/add-single", body).then(() => {
+    axios.post(url + "/vocab/add-single", body).then(() => {
       modal.handleClose();
     });
   };
@@ -68,7 +69,7 @@ const VocabModal = (modal) => {
     };
     console.log("update new vocab=" + JSON.stringify(body));
     axios
-      .post("http://localhost:8081/vocab/update-single", body, {
+      .post(url + "/vocab/update-single", body, {
         headers: headers,
       })
       .then(() => {
@@ -87,7 +88,7 @@ const VocabModal = (modal) => {
     console.log("delete vocab=" + JSON.stringify(body));
 
     axios
-      .post("http://localhost:8081/vocab/delete-single", body, {
+      .post(url + "/vocab/delete-single", body, {
         headers: headers,
       })
       .then(() => {

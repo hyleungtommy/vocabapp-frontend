@@ -19,6 +19,7 @@ import LangDropdown from "./components/LangDropdown";
 import LangModal from "./components/LangModal";
 import {shuffle} from "../util";
 import { Link } from "react-router-dom";
+import url from '../awsurl'
 
 const Quiz = (item)=>{
 
@@ -56,7 +57,7 @@ const Quiz = (item)=>{
             langCode: selectedLangCode,
           };
           axios
-            .post("http://localhost:8081/vocab/list-langcode", body, {
+            .post(url + "/vocab/list-langcode", body, {
               headers: headers
             })
             .then((resp) => {

@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/style.css';
 import '../css/login.css';
+import url from '../awsurl'
 
 const Signup= ()=>{
   const [username, setUserName] = useState("");
@@ -31,7 +32,7 @@ const Signup= ()=>{
         motherLang:'en'
       };
       axios
-        .post("http://localhost:8081/user/create", body, {
+        .post(url + "/user/create", body, {
           headers: headers
         })
         .then((resp) => {
@@ -74,7 +75,7 @@ const Signup= ()=>{
       username: username
     };
     axios
-      .post("http://localhost:8081/user/check-exist", body, {
+      .post( url + "/user/check-exist", body, {
         headers: headers
       })
       .then((resp) => {

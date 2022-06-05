@@ -7,6 +7,7 @@ import '../css/login.css';
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import url from '../awsurl'
 
 const Login= (item) =>{
   const [username, setUserName] = useState("");
@@ -22,7 +23,7 @@ const Login= (item) =>{
       password: password
     };
     axios
-      .post("http://localhost:8081/user/login", body, {
+      .post(url + "/user/login", body, {
         headers: headers
       })
       .then((resp) => {

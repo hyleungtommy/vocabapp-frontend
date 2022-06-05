@@ -4,6 +4,7 @@ import "../../css/style.css";
 import React, { useState } from "react";
 import axios from "axios";
 import LangModalItem from "./LangModalItem";
+import url from '../../awsurl'
 
 const LangModal = (modal) => {
     const[newLangList,setNewLangList] = useState([])
@@ -19,7 +20,7 @@ const LangModal = (modal) => {
       _id: modal.userId
     };
     axios
-      .post("http://localhost:8081/user/get-langlist-new", body, {
+      .post(url + "/user/get-langlist-new", body, {
         headers: headers,
       })
       .then((resp) => {
@@ -44,7 +45,7 @@ const LangModal = (modal) => {
         code:code
       };
       axios
-      .post("http://localhost:8081/user/update-langlist", body, {
+      .post(url + "/user/update-langlist", body, {
         headers: headers
       })
       .then(() => {
