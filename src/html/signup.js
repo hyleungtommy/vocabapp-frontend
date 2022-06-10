@@ -17,77 +17,54 @@ const Signup= ()=>{
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMsg,setErrorMsg]= useState('');
 
-  const signupAccount=async function(){
-    const valid = await validateInput()
-    console.log(valid)
-    if(valid){
+  const checkAndSignup = function(){
+    if(username == ''){
+      setErrorMsg("Username cannot be empty")
+    }else if(password == '' ){
+      setErrorMsg("Password cannot be empty")
+    }else if(confirmPassword == '' ){
+      setErrorMsg("Comfirm password cannot be empty")
+    }else if(confirmPassword != password){
+      setErrorMsg("Password mismatch")
+    }else{
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
       const body = {
-        username: username,
-        password: password,
-        firstLang: '',
-        motherLang:'en'
+        username: username
       };
       axios
-        .post(url + "/user/create", body, {
+        .post( url + "/user/check-exist", body, {
           headers: headers
         })
         .then((resp) => {
-          window.location = window.location.origin + "/login"
+          console.log("check user name resp=" + resp.data);
+          if (resp.data && resp.data.length > 0) {
+            setErrorMsg("Username exist")
+          }else{
+            setErrorMsg("")
+            console.log("valid data")
+            const headers = {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            };
+            const body = {
+              username: username,
+              password: password,
+              firstLang: '',
+              motherLang:'en'
+            };
+            axios
+              .post(url + "/user/create", body, {
+                headers: headers
+              })
+              .then((resp) => {
+                window.location = window.location.origin + "/login"
+              });
+          }
         });
     }
-  }
-
-  const validateInput = async function(){
-    if(username == ''){
-      setErrorMsg("Username cannot be empty")
-      return false;
-    }else if(password == '' ){
-      setErrorMsg("Password cannot be empty")
-      return false;
-    }else if(confirmPassword == '' ){
-      setErrorMsg("Comfirm password cannot be empty")
-      return false;
-    }else if(confirmPassword != password){
-      setErrorMsg("Password mismatch")
-      return false
-    }else{
-      const nameExist = await checkUserNameExist()
-      if(nameExist){
-        setErrorMsg('Username already exist')
-        return false
-      }else{
-        setErrorMsg('')
-        return true
-      }
-    }
-  }
-
-  const checkUserNameExist = async function(){
-    const headers = {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    };
-    const body = {
-      username: username
-    };
-    axios
-      .post( url + "/user/check-exist", body, {
-        headers: headers
-      })
-      .then((resp) => {
-        console.log(resp.data);
-        if (resp.data && resp.data.length > 0) {
-          setErrorMsg("Username exist")
-          return false;
-        }else{
-          setErrorMsg("")
-          return true
-        }
-      });
   }
 
   return(
@@ -110,7 +87,7 @@ const Signup= ()=>{
             </Form.Group>
             <p>{errorMsg}</p>
             <br/>
-            <Button className='btn btn-success btn-login' onClick={signupAccount}>Sign Up</Button>
+            <Button className='btn btn-success btn-login' onClick={checkAndSignup}>Sign Up</Button>
             <br/>
           </Form>
         </Col>
