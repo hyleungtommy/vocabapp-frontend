@@ -32,7 +32,7 @@ const Vocab = (item) => {
   //const userId = item.userId;
   //console.log(item.userId)
   const [selectedLang, setSelectedLang] = useState(0);
-  const [selectedLangCode, setSelectedLangCode] = useState("jp");
+  const [selectedLangCode, setSelectedLangCode] = useState("");
   const [selectedLangType, setSelectedLangType] = useState("");
   const [langList, setLangList] = useState([]);
   const [updateView, setUpdateView] = useState(0);
@@ -75,9 +75,10 @@ const Vocab = (item) => {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
     };
+    var langCode = (selectedLangCode == "" ? langListCache[0].code : selectedLangCode)
     const body = {
       userId: userId,
-      langCode: langListCache[0].code,
+      langCode: langCode,
     };
     axios
       .post(url + "/vocab/list-langcode", body, {
@@ -222,7 +223,7 @@ const Vocab = (item) => {
         <Container id="navbar">
           <img src={memberLogo} className="account-icon" alt="acc" />
           <Link to='/login' ><Button variant="outline-success" className="btn-logout" onClick={item.logout}>Logout</Button></Link>
-          <Link to='/quiz' ><Button ref={quizButton} variant="info" >Quiz</Button></Link>
+          <Link to='/quiz' ><Button id="btn-quiz" ref={quizButton} variant="info" >Quiz</Button></Link>
           {
             (langList.length == 0 ? 
             <button
@@ -297,7 +298,8 @@ const Vocab = (item) => {
             </ul>
           </div>
         </Container>
-        <Container fluid>{cards}</Container>
+        <Container id="vocab-cards" fluid>{cards}</Container>
+        <Container id="footer" ></Container>
         <Container fluid>
           <VocabModal
             show={show}

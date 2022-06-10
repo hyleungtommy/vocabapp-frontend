@@ -21,7 +21,7 @@ const LangDropdown = (langList) => {
     flagSrc = langList.langList[langList.selectedLang].flag;
   }
   return (
-    <div className="dropdown dropstart text-end display-inline float-right">
+    <div id="flag-img" className="dropdown dropstart text-end display-inline float-right">
       <img
         src={require("../../img/" + flagSrc)}
         className="dropdown-toggle"

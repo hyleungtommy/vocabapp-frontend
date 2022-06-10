@@ -22,6 +22,8 @@
     margin-left:2em;
 }
 
+
+
 .clear-both{
     clear: both;
 }
@@ -102,10 +104,15 @@ footer{
 .quizbox{
     display: block;
     width: 100%;
-    height: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     background-color: white;
     text-align: center;
     font-size: 1.5em;
+}
+
+.quizbox p{
+    margin-bottom: 0px;
 }
 
 .quizbox:hover{
@@ -152,4 +159,41 @@ footer{
     float: right;
     margin-top: 15px;
     margin-left: 10px;
+}
+
+.vocab-card:last-child{
+    margin-bottom: 5%;
+}
+
+@media only screen and (max-width: 800px){
+    .vocab-card{
+        margin-left:2%;
+        width:96%;
+    }
+
+    .account-icon{
+        display: none;
+    }
+
+    .text-correct{
+        font-size: 1.2em;
+    }
+
+    .text-incorrect{
+        font-size: 1.2em;
+    }
+
+    .quizbox{
+        font-size: 1.3em;
+    }
+
+    .btn-logout,.btn-info,#flag-img,.btn-float-right{
+        margin-top: 5px;
+    }
+
+    
+
+    #quiz-page hr{
+        display: none;
+    }
 }

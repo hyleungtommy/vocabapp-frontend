@@ -13,6 +13,7 @@ const VocabModal = (modal) => {
   const [comment, setComment] = useState("");
   const [translation, setTranslation] = useState("");
   const [notes, setNotes] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const loadVocabData = () => {
     if (modal.modalMode == "Exist") {
       console.log(modal.vocab);
@@ -23,6 +24,7 @@ const VocabModal = (modal) => {
       setComment(modal.vocab.sentence);
       setTranslation(modal.vocab.translation);
       setNotes(modal.vocab.note);
+      setErrorMsg("")
     } else {
       setName("");
       setType("N");
@@ -30,6 +32,7 @@ const VocabModal = (modal) => {
       setComment("");
       setTranslation("");
       setNotes("");
+      setErrorMsg("")
     }
   };
   const addNewVocab = (langCode, userId) => {
@@ -96,6 +99,24 @@ const VocabModal = (modal) => {
       });
   };
 
+  const validateInputForAddNew = (langCode, userId) => {
+    if(name == "" || meaning == ""){
+      setErrorMsg("Vocab and meaning cannot be empty");
+    }else{
+      setErrorMsg("")
+      addNewVocab(langCode, userId)
+    }
+  }
+
+  const validateInputForUpdate = ()=>{
+    if(name == "" || meaning == ""){
+      setErrorMsg("Vocab and meaning cannot be empty");
+    }else{
+      setErrorMsg("")
+      updateVocab()
+    }
+  }
+
   return (
     <Modal
       show={modal.show}
@@ -161,28 +182,33 @@ const VocabModal = (modal) => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           ></textarea>
+          <p>{errorMsg}</p>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          className="vocab-delete me-auto"
-          variant="outline-secondary"
-          onClick={deleteVocab}
-        >
-          Delete
-        </Button>
+        {
+          modal.modalMode == "New" ? (
+            <></>
+            ) : (<Button
+              className="vocab-delete me-auto"
+              variant="outline-secondary"
+              onClick={deleteVocab}
+            >
+              Delete
+            </Button>)
+        }
         <Button variant="secondary" onClick={modal.handleClose}>
           Close
         </Button>
         {modal.modalMode == "New" ? (
           <Button
             variant="primary"
-            onClick={() => addNewVocab(modal.langCode, modal.userId)}
+            onClick={() => validateInputForAddNew(modal.langCode, modal.userId)}
           >
             Add Vocab
           </Button>
         ) : (
-          <Button variant="primary" onClick={updateVocab}>
+          <Button variant="primary" onClick={validateInputForUpdate}>
             Save Change
           </Button>
         )}

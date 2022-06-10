@@ -173,7 +173,7 @@ const Quiz = (item)=>{
 
     return(
         <>
-        <Container fluid>
+        <Container id="quiz-page" fluid>
             <Container id="navbar">
                 <img src={memberLogo} className="account-icon" alt="acc" />
                 <Link to='/login' ><Button variant="outline-success" className="btn-logout" onClick={item.logout}>Logout</Button></Link>
@@ -188,7 +188,6 @@ const Quiz = (item)=>{
                         <p className="center">Please select the correct translation</p>
                         <br/>
                         <h2 className="center">{displayQuestion}</h2>
-                        <br/>
                         <br/>
                         <div className="quizbox" id="choice1" 
                             onClick={()=>{
