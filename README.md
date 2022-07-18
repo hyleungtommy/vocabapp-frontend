@@ -1,5 +1,5 @@
 # vocabapp-frontend
-Frontend link:[https://react-app-hyleungtommy.s3.amazonaws.com/index.html](http://react-app-hyleungtommy.s3-website-us-east-1.amazonaws.com/)
+Frontend link:[http://react-app-hyleungtommy.s3-website-us-east-1.amazonaws.com/](http://react-app-hyleungtommy.s3-website-us-east-1.amazonaws.com/)
 
 # Deployment step
 1. Make sure a S3 bucket is present (if not, create one refering the section below)
