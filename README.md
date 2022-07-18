@@ -1,7 +1,8 @@
 # vocabapp-frontend
+Vocab App frontend program, code with ReactJS
 Frontend link:[http://react-app-hyleungtommy.s3-website-us-east-1.amazonaws.com/](http://react-app-hyleungtommy.s3-website-us-east-1.amazonaws.com/)
 
-# Deployment step
+# Deployment guide
 1. Make sure a S3 bucket is present (if not, create one refering the section below)
 2. Download the vocabapp-frontend project
 3. Go to the directory you want the project to locate, run "npx create-react-app vocabapp-frontend"
