@@ -1,0 +1,45 @@
+body{
+    font-family: "Lato", Arial, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+    font-weight: normal !important;
+    background: #f8f9fd !important;
+    color: gray !important;
+}
+
+#login-panel{
+    background: white;
+    margin-top: 7em;
+    padding: 1em;
+    border-radius: 0.25rem;
+    box-shadow: 0px 10px 34px -15px rgb(0 0 0 / 24%);
+}
+
+.btn-login{
+    width: 100%;
+    background: #01d28e !important;
+    border: 1px solid #01d28e !important;
+    color: #fff !important;
+    margin-bottom: 1em;
+    
+}
+
+#login-panel a{
+    text-decoration: none;
+    color:gray;
+}
+
+.signup-link{
+    color: #01d28e !important;
+}
+
+#login{
+    padding: 1em 2em;
+}
+
+.btn-logout{
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #198754;
+    border-color: #198754;
+}
